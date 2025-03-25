@@ -18,9 +18,9 @@ def step_navigate_to_sign_up_page(context):
 
 @when("I fill in the sign-up form with valid details")
 def step_fill_sign_up_form(context):
-    unique_email = f"testuser{int(time.time())}@example.com"  # Unique email
+    unique_email = f"testuser{int(time.time())}@example.com"
     context.signup_page.fill_sign_up_form("John", "Doe", unique_email, "Password123!")
-    context.email = unique_email  # Store email for sign-in
+    context.email = unique_email
 
 @when("I submit the sign-up form")
 def step_submit_sign_up_form(context):
@@ -31,16 +31,18 @@ def step_verify_my_account_page(context):
     driver = DriverSetup.get_driver()
     assert "customer/account" in driver.current_url
 
+@given("I am logged out and on the Magento homepage")
+def step_logged_out_on_homepage(context):
+    driver = DriverSetup.get_driver()
+    driver.get("https://magento.softwaretestingboard.com/customer/account/logout/")  # Logout
+    driver.get("https://magento.softwaretestingboard.com/")  # Back to homepage
+    context.home_page = HomePage()
+    
 @when("I navigate to the sign-in page")
 def step_navigate_to_sign_in_page(context):
-    context.home_page = HomePage()
-    print("Current URL:", context.home_page.driver.current_url)
-    print("Page Source:", context.home_page.driver.page_source)  # Debug HTML
-    import time
-    time.sleep(10)  # Pause for 10 seconds to inspect manually
     context.home_page.go_to_sign_in()
     context.signin_page = SignInPage()
-
+   
 @when("I enter my credentials")
 def step_enter_credentials(context):
     context.signin_page.enter_credentials(context.email, "Password123!")  # Use email from sign-up

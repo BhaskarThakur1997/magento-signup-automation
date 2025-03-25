@@ -8,7 +8,7 @@ Feature: User Authentication on Magento Software Testing Board
     Then I should be redirected to the My Account page
 
   Scenario: Successful Sign-In
-    Given I am on the Magento homepage
+    Given I am logged out and on the Magento homepage
     When I navigate to the sign-in page
     And I enter my credentials
     And I submit the sign-in form
